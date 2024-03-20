@@ -67,7 +67,6 @@ class GameViewModel : ViewModel() {
 
     fun checkUserGuess() {
         if (userGuess.value.equals(currentWord, ignoreCase = true)) {
-            incrementGuessCount()
             if (_uiState.value.currentGuessOfTen == 9) {
                 Log.i(TAG, "You win!!")
                 _uiState.update { state ->
@@ -76,11 +75,13 @@ class GameViewModel : ViewModel() {
                         showFinalScoreDialog = true
                     )
                 }
+                incrementGuessCount()
             } else {
                 Log.i(TAG, "Correct!")
                 _uiState.update { currentState ->
                     currentState.copy(isGuessedWordWrong = false)
                 }
+                incrementGuessCount()
                 increaseUserScore()
                 nextTurnNewWord()
             }
